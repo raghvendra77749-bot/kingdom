@@ -51,11 +51,33 @@
 
         .throne:hover { transform: translateY(-15px); border-color: var(--gold); }
 
-        .rank-1 { height: 380px; order: 2; box-shadow: 0 0 40px rgba(255, 204, 0, 0.15); border-width: 2px; }
+        .rank-1 { height: 420px; order: 2; box-shadow: 0 0 40px rgba(255, 204, 0, 0.15); border-width: 2px; }
         .rank-2 { height: 300px; order: 3; }
         .rank-3 { height: 300px; order: 1; }
 
         .king-name { font-family: 'Cinzel'; font-size: 22px; color: #fff; margin: 15px 0; }
+
+        /* --- RANK 1 NEXUS STYLE UPDATE --- */
+        .nexus-style {
+            font-family: 'Cinzel', serif;
+            font-weight: 900;
+            font-size: 45px !important;
+            color: #fff;
+            text-shadow: 0 0 10px #fff, 0 0 20px var(--gold), 0 0 40px var(--gold);
+            letter-spacing: 2px;
+            display: block;
+            margin: 5px 0 0 0 !important;
+        }
+
+        .spikes {
+            width: 100%;
+            max-width: 280px;
+            height: auto;
+            margin-top: -15px;
+            filter: drop-shadow(0 0 10px var(--gold));
+        }
+        /* --------------------------------- */
+
         .claim-btn {
             background: var(--gold); color: #000; border: none;
             padding: 12px 25px; border-radius: 50px; font-weight: 900;
@@ -85,7 +107,8 @@
 
         @media (max-width: 768px) {
             .stage { flex-direction: column; align-items: center; }
-            .throne { width: 90%; height: auto !important; order: unset !important; }
+            .throne { width: 90%; height: auto !important; order: unset !important; margin-bottom: 20px;}
+            .nexus-style { font-size: 35px !important; }
         }
     </style>
 </head>
@@ -107,7 +130,13 @@
 
         <div class="throne rank-1" id="t1">
             <span style="font-size: 60px;">👑</span>
-            <div class="king-name" id="name1" style="font-size: 30px;">SUPREME KING</div>
+            <div class="king-name nexus-style" id="name1">SUPREME KING</div>
+            <svg class="spikes" viewBox="0 0 320 100">
+                <path d="M160,10 L180,40 L160,25 L140,40 Z" fill="white"/>
+                <path d="M0,55 L40,45 L60,55 L40,65 Z" fill="white"/>
+                <path d="M320,55 L280,45 L260,55 L280,65 Z" fill="white"/>
+                <path d="M160,100 L180,70 L160,85 L140,70 Z" fill="white"/>
+            </svg>
             <button class="claim-btn" onclick="openPopup(1)">CLAIM (FREE)</button>
         </div>
 
@@ -147,12 +176,12 @@
             let name = document.getElementById('userName').value;
             if(!name) return alert("Bina naam ke raja nahi banoge!");
             
+            // Rank 1 ke liye special style humne CSS mein rakha hai
             document.getElementById('name' + currentThrone).innerText = name.toUpperCase();
             document.getElementById('popup').style.display = 'none';
             document.getElementById('userName').value = "";
         }
 
-        // Generate Grid Slots
         function makeGrid(id, count) {
             let grid = document.getElementById(id);
             for(let i=1; i<=count; i++) {
