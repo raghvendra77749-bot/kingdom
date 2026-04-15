@@ -1,183 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Kingdom | Elite</title>
+    <title>ANAND GFX | SECRET BOX</title>
     <style>
-        body {
-            background-color: #0d0d0d;
-            color: #ffffff;
-            font-family: 'Segoe UI', Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        /* Header Section */
-        header {
-            text-align: center;
-            padding: 40px 20px;
-        }
-
-        h1 {
-            font-size: clamp(2.5rem, 8vw, 4rem);
-            letter-spacing: 12px;
-            margin: 0;
-            color: #fff;
-            text-shadow: 0 0 15px rgba(255,255,255,0.5);
-            text-transform: uppercase;
-        }
-
-        .line {
-            width: 150px;
-            height: 3px;
-            background: #ffcf40;
-            margin: 10px auto;
-            border-radius: 2px;
-        }
-
-        /* Main Grid */
-        .container {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-            width: 90%;
-            max-width: 400px; /* Mobile friendly width */
-            padding-bottom: 50px;
-        }
-
-        .card {
-            background: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-            transition: 0.3s;
-            position: relative;
-        }
-
-        /* Special Styling for First King */
-        .card.rank-1 {
-            border-color: #ffcf40;
-            box-shadow: 0 0 20px rgba(255, 207, 64, 0.2);
-        }
-
-        .rank-label {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #ffcf40;
-            margin-bottom: 15px;
-        }
-
-        /* DP Circle */
-        .dp-circle {
-            width: 80px;
-            height: 80px;
-            background: #2a2a2a;
-            border-radius: 50%;
-            margin: 0 auto 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid #444;
-            overflow: hidden;
-        }
-
-        .dp-circle img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .user-name {
-            font-size: 1.4rem;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-
-        /* Buttons */
-        .btn {
-            background: transparent;
-            border: 1px solid #ffcf40;
-            color: #ffcf40;
-            padding: 8px 25px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-        }
-
-        .btn:hover {
-            background: #ffcf40;
-            color: #000;
-        }
-
-        .owned {
-            border-color: #00f2ff;
-            color: #00f2ff;
-        }
-
-        /* Footer */
-        .info-text {
-            color: #00f2ff;
-            font-weight: bold;
-            margin-top: 20px;
-            font-size: 0.9rem;
-            text-align: center;
-        }
-
-        .footer-note {
-            color: #555;
-            font-size: 0.8rem;
-            margin-top: 10px;
-            font-style: italic;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;800&display=swap');
+        body { background: #000; color: #fff; font-family: 'Outfit', sans-serif; text-align: center; margin: 0; padding: 20px; }
+        .box { background: linear-gradient(145deg, #111, #050505); border: 1px solid #222; padding: 40px 20px; border-radius: 30px; max-width: 400px; margin: 50px auto; box-shadow: 0 20px 40px rgba(0,0,0,1); }
+        .pfp { width: 80px; height: 80px; background: #ff0055; border-radius: 50%; margin: -80px auto 20px; border: 5px solid #000; overflow: hidden; }
+        h1 { font-size: 20px; margin: 0; }
+        .tag { color: #666; font-size: 12px; margin-bottom: 30px; display: block; }
+        textarea { width: 90%; background: #151515; border: 1px solid #333; border-radius: 15px; color: #fff; padding: 15px; font-family: 'Outfit'; font-size: 16px; outline: none; margin-bottom: 20px; }
+        .send-btn { background: #fff; color: #000; padding: 15px 40px; border-radius: 50px; font-weight: 800; cursor: pointer; transition: 0.3s; }
+        .send-btn:hover { background: #ff0055; color: #fff; transform: scale(1.05); }
+        .footer { margin-top: 50px; font-size: 10px; color: #333; letter-spacing: 2px; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>KINGDOM</h1>
-        <div class="line"></div>
-    </header>
-
-    <div class="container">
-        <div class="card rank-1">
-            <div class="rank-label">#01 First King</div>
-            <div class="dp-circle">
-                <span style="color:#555">DP</span>
-            </div>
-            <div class="user-name">Anand</div>
-            <button class="btn owned">OWNED</button>
+    <div class="box">
+        <div class="pfp">
+            <img src="https://via.placeholder.com/80" style="width:100%">
         </div>
-
-        <div class="card">
-            <div class="rank-label">#02 Second King</div>
-            <div class="dp-circle">
-                <span style="color:#555">?</span>
-            </div>
-            <div class="user-name">Empty</div>
-            <button class="btn">UNLOCK ₹100</button>
-        </div>
-
-        <div class="card">
-            <div class="rank-label">#03 Third King</div>
-            <div class="dp-circle">
-                <span style="color:#555">?</span>
-            </div>
-            <div class="user-name">Empty</div>
-            <button class="btn">UNLOCK ₹100</button>
-        </div>
-
-        <div class="info-text">If you pay more then you will be First King.</div>
-        <div class="footer-note">The Kingdom change in one week.</div>
+        <h1>ANAND GFX</h1>
+        <span class="tag">@raghvendra_singh</span>
+        
+        <p style="font-size: 14px; color: #aaa;">Muje ek anonymous message bhejo... <br>Main kabhi nahi jaan paunga kisne bheja! 🤫</p>
+        
+        <textarea id="msg" rows="4" placeholder="Kuch spicy likho..."></textarea>
+        
+        <div class="send-btn" onclick="send()">SEND ANONYMOUSLY</div>
     </div>
 
+    <div class="footer">POWERED BY RN COLLECTION | 2026</div>
+
+    <script>
+        function send() {
+            let m = document.getElementById('msg').value;
+            if(!m) return alert("Khali message? Kuch toh likho!");
+            
+            // Yahan hum EmailJS ya simple WhatsApp redirect use kar sakte hain
+            alert("Message Sent! Ab screenshot lo aur story pe lagao.");
+            document.getElementById('msg').value = "";
+        }
+    </script>
 </body>
 </html>
