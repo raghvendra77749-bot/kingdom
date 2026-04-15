@@ -3,112 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE KINGDOM | ANAND GFX</title>
+    <title>THE KINGDOM | ROYAL EDITION</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Outfit:wght@300;600&display=swap');
 
         :root {
-            --gold: #ffcc00; --silver: #e0e0e0; --bronze: #cd7f32;
+            --gold: #ffcc00;
+            --premium-gold: linear-gradient(135deg, #ffcc00 0%, #fff3a0 50%, #ffcc00 100%);
+            --glass: rgba(255, 255, 255, 0.05);
         }
 
         body {
-            margin: 0; background: #000; color: #fff;
+            margin: 0; background: #050505; color: #fff;
             font-family: 'Outfit', sans-serif; overflow-x: hidden;
             display: flex; flex-direction: column; align-items: center;
         }
 
-        /* Animated Glowing Background */
+        /* 1. Particles Background Effect */
         .bg-gradient {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% -20%, #222 0%, #000 70%);
+            background: radial-gradient(circle at 50% 0%, #1a1a1a 0%, #000 80%);
             z-index: -1;
         }
 
         header { margin-top: 60px; text-align: center; }
         h1 {
-            font-family: 'Cinzel', serif; font-size: 4rem; margin: 0;
-            background: linear-gradient(to bottom, #fff 30%, var(--gold) 100%);
+            font-family: 'Cinzel', serif; font-size: 4.5rem; margin: 0;
+            background: var(--premium-gold);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 20px rgba(255, 204, 0, 0.4));
-            letter-spacing: 5px;
+            filter: drop-shadow(0 0 30px rgba(255, 204, 0, 0.3));
+            letter-spacing: 8px; font-weight: 900;
         }
 
-        /* Kings Stage */
+        /* 2. Premium Thrones Stage */
         .stage {
             display: flex; align-items: flex-end; justify-content: center;
-            gap: 20px; margin: 60px 0; width: 95%; max-width: 1100px;
+            gap: 25px; margin: 70px 0; width: 95%; max-width: 1200px;
         }
 
         .throne {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(15px);
+            background: var(--glass);
+            backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 30px; padding: 30px;
-            text-align: center; transition: 0.5s;
+            border-radius: 40px; padding: 40px 20px;
+            text-align: center; transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
             position: relative; flex: 1;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            overflow: hidden;
         }
 
-        .throne:hover { transform: translateY(-15px); border-color: var(--gold); }
+        /* Running Border Effect for Rank 1 */
+        .rank-1::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: conic-gradient(transparent, transparent, transparent, var(--gold));
+            animation: rotate 4s linear infinite; z-index: -1;
+        }
+        @keyframes rotate { 100% { transform: rotate(360deg); } }
+        .rank-1-inner { position: absolute; inset: 4px; background: #0a0a0a; border-radius: 36px; z-index: -1; }
 
-        .rank-1 { height: 420px; order: 2; box-shadow: 0 0 40px rgba(255, 204, 0, 0.15); border-width: 2px; }
-        .rank-2 { height: 300px; order: 3; }
-        .rank-3 { height: 300px; order: 1; }
+        .rank-1 { height: 450px; order: 2; z-index: 2; transform: scale(1.05); border: none; }
+        .rank-2 { height: 320px; order: 3; }
+        .rank-3 { height: 320px; order: 1; }
 
-        .king-name { font-family: 'Cinzel'; font-size: 22px; color: #fff; margin: 15px 0; }
+        .throne:hover { transform: translateY(-20px) scale(1.08); border-color: var(--gold); }
 
-        /* --- RANK 1 NEXUS STYLE UPDATE --- */
+        /* 3. Nexus Premium Name Update */
         .nexus-style {
-            font-family: 'Cinzel', serif;
-            font-weight: 900;
-            font-size: 45px !important;
-            color: #fff;
-            text-shadow: 0 0 10px #fff, 0 0 20px var(--gold), 0 0 40px var(--gold);
-            letter-spacing: 2px;
-            display: block;
-            margin: 5px 0 0 0 !important;
+            font-family: 'Cinzel', serif; font-weight: 900;
+            font-size: 48px !important;
+            background: var(--premium-gold);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 15px rgba(255,204,0,0.8));
+            text-transform: uppercase; margin-top: 10px !important;
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { opacity: 0.8; } 50% { opacity: 1; filter: drop-shadow(0 0 25px var(--gold)); } 100% { opacity: 0.8; }
         }
 
         .spikes {
-            width: 100%;
-            max-width: 280px;
-            height: auto;
-            margin-top: -15px;
-            filter: drop-shadow(0 0 10px var(--gold));
+            width: 100%; max-width: 300px; margin-top: -20px;
+            filter: drop-shadow(0 0 15px var(--gold)); opacity: 0.9;
         }
-        /* --------------------------------- */
 
+        /* Premium Buttons */
         .claim-btn {
-            background: var(--gold); color: #000; border: none;
-            padding: 12px 25px; border-radius: 50px; font-weight: 900;
-            cursor: pointer; transition: 0.3s;
+            background: var(--premium-gold); color: #000; border: none;
+            padding: 15px 35px; border-radius: 12px; font-weight: 900;
+            cursor: pointer; transition: 0.4s; text-transform: uppercase;
+            letter-spacing: 2px; box-shadow: 0 10px 20px rgba(0,0,0,0.4);
         }
-        .claim-btn:hover { transform: scale(1.1); box-shadow: 0 0 20px var(--gold); }
+        .claim-btn:hover { letter-spacing: 4px; box-shadow: 0 0 30px var(--gold); }
 
-        /* Grid Categories */
-        .members-section { width: 90%; max-width: 1100px; margin-top: 50px; }
-        .cat-title { font-family: 'Cinzel'; color: var(--gold); border-bottom: 1px solid #222; padding-bottom: 10px; margin-bottom: 20px; }
+        /* Grid Styling */
+        .members-section { width: 90%; max-width: 1100px; margin-top: 80px; }
+        .cat-title { 
+            font-family: 'Cinzel'; color: var(--gold); border-left: 5px solid var(--gold); 
+            padding-left: 15px; margin-bottom: 30px; letter-spacing: 3px;
+        }
         
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; margin-bottom: 50px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px; }
         .slot {
-            background: #111; border: 1px solid #222; padding: 15px;
-            border-radius: 15px; text-align: center; font-size: 14px;
-            color: #666; transition: 0.3s; cursor: pointer;
+            background: rgba(255,255,255,0.02); border: 1px solid #222; padding: 25px;
+            border-radius: 20px; text-align: center; color: #888; transition: 0.4s;
         }
-        .slot:hover { border-color: #fff; color: #fff; }
+        .slot:hover { background: #111; border-color: var(--gold); color: #fff; transform: scale(1.05); }
 
-        /* Popup */
         #popup {
             display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            background: #111; padding: 40px; border-radius: 20px; border: 1px solid var(--gold);
-            z-index: 100; text-align: center; box-shadow: 0 0 100px rgba(0,0,0,1);
+            background: #0a0a0a; padding: 50px; border-radius: 30px; border: 2px solid var(--gold);
+            z-index: 1000; text-align: center; box-shadow: 0 0 150px rgba(0,0,0,1);
         }
-        input { background: #000; border: 1px solid #333; color: #fff; padding: 10px; border-radius: 5px; width: 100%; margin: 20px 0; }
 
         @media (max-width: 768px) {
             .stage { flex-direction: column; align-items: center; }
-            .throne { width: 90%; height: auto !important; order: unset !important; margin-bottom: 20px;}
-            .nexus-style { font-size: 35px !important; }
+            .throne { width: 90%; height: auto !important; margin-bottom: 30px;}
+            h1 { font-size: 2.5rem; }
         }
     </style>
 </head>
@@ -118,68 +129,59 @@
 
     <header>
         <h1>THE KINGDOM</h1>
-        <p style="letter-spacing: 10px; font-size: 12px; color: #555;">ROYAL BLOODLINE 2026</p>
+        <p style="letter-spacing: 12px; font-size: 14px; color: var(--gold); opacity: 0.6;">ROYAL BLOODLINE 2026</p>
     </header>
 
     <div class="stage">
         <div class="throne rank-3" id="t3">
-            <span style="font-size: 40px;">🥉</span>
-            <div class="king-name" id="name3">EMPTY THRONE</div>
-            <button class="claim-btn" onclick="openPopup(3)">CLAIM (FREE)</button>
+            <span style="font-size: 40px; filter: grayscale(1);">🥉</span>
+            <div class="king-name" id="name3">EMPTY</div>
+            <button class="claim-btn" onclick="openPopup(3)">CLAIM</button>
         </div>
 
         <div class="throne rank-1" id="t1">
-            <span style="font-size: 60px;">👑</span>
+            <div class="rank-1-inner"></div> <span style="font-size: 70px; filter: drop-shadow(0 0 20px var(--gold));">👑</span>
             <div class="king-name nexus-style" id="name1">SUPREME KING</div>
+            
             <svg class="spikes" viewBox="0 0 320 100">
                 <path d="M160,10 L180,40 L160,25 L140,40 Z" fill="white"/>
                 <path d="M0,55 L40,45 L60,55 L40,65 Z" fill="white"/>
                 <path d="M320,55 L280,45 L260,55 L280,65 Z" fill="white"/>
                 <path d="M160,100 L180,70 L160,85 L140,70 Z" fill="white"/>
             </svg>
-            <button class="claim-btn" onclick="openPopup(1)">CLAIM (FREE)</button>
+            
+            <button class="claim-btn" onclick="openPopup(1)">CLAIM VIP</button>
         </div>
 
         <div class="throne rank-2" id="t2">
-            <span style="font-size: 40px;">🥈</span>
-            <div class="king-name" id="name2">EMPTY THRONE</div>
-            <button class="claim-btn" onclick="openPopup(2)">CLAIM (FREE)</button>
+            <span style="font-size: 40px; filter: grayscale(1);">🥈</span>
+            <div class="king-name" id="name2">EMPTY</div>
+            <button class="claim-btn" onclick="openPopup(2)">CLAIM</button>
         </div>
     </div>
 
     <div class="members-section">
-        <h2 class="cat-title">GOLD MEMBERS (10 SLOTS)</h2>
+        <h2 class="cat-title">GOLD MEMBERS</h2>
         <div class="grid" id="gold-grid"></div>
-
-        <h2 class="cat-title" style="color: var(--silver);">SILVER MEMBERS (15 SLOTS)</h2>
-        <div class="grid" id="silver-grid"></div>
-
-        <h2 class="cat-title" style="color: var(--bronze);">BRONZE MEMBERS (20 SLOTS)</h2>
-        <div class="grid" id="bronze-grid"></div>
     </div>
 
     <div id="popup">
-        <h3 style="font-family: 'Cinzel';">ENTER YOUR NAME</h3>
-        <input type="text" id="userName" placeholder="Your Name...">
-        <button class="claim-btn" onclick="saveName()">BETH JAO RAJA!</button>
+        <h2 style="font-family: 'Cinzel'; color: var(--gold);">ENTER THE ROYAL NAME</h2>
+        <input type="text" id="userName" style="background: #000; border: 1px solid #333; color: #fff; padding: 15px; width: 100%; margin: 25px 0; border-radius: 10px;" placeholder="Name...">
+        <button class="claim-btn" onclick="saveName()">ASCEND TO THRONE</button>
     </div>
 
     <script>
         let currentThrone = 0;
-
         function openPopup(id) {
             currentThrone = id;
             document.getElementById('popup').style.display = 'block';
         }
-
         function saveName() {
             let name = document.getElementById('userName').value;
-            if(!name) return alert("Bina naam ke raja nahi banoge!");
-            
-            // Rank 1 ke liye special style humne CSS mein rakha hai
+            if(!name) return alert("Enter Name!");
             document.getElementById('name' + currentThrone).innerText = name.toUpperCase();
             document.getElementById('popup').style.display = 'none';
-            document.getElementById('userName').value = "";
         }
 
         function makeGrid(id, count) {
@@ -189,16 +191,13 @@
                 div.className = 'slot';
                 div.innerText = 'SLOT ' + i;
                 div.onclick = function() {
-                    let n = prompt("Enter Name for Slot " + i);
+                    let n = prompt("Enter Name:");
                     if(n) this.innerText = n.toUpperCase();
                 };
                 grid.appendChild(div);
             }
         }
-
         makeGrid('gold-grid', 10);
-        makeGrid('silver-grid', 15);
-        makeGrid('bronze-grid', 20);
     </script>
 </body>
 </html>
