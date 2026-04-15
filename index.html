@@ -5,200 +5,178 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Kingdom | Elite</title>
     <style>
-        :root {
-            --neon-gold: #ffcf40;
-            --neon-blue: #00f2ff;
-            --bg-dark: #0a0a0c;
-            --card-bg: #16161a;
-        }
-
         body {
-            background-color: var(--bg-dark);
-            color: white;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #0d0d0d;
+            color: #ffffff;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin: 0;
-            padding: 20px;
-            overflow-x: hidden;
+            min-height: 100vh;
         }
 
-        /* Kingdom Title Aesthetic */
-        .header {
+        /* Header Section */
+        header {
             text-align: center;
-            margin-top: 40px;
+            padding: 40px 20px;
         }
 
         h1 {
-            font-size: 3rem;
-            letter-spacing: 10px;
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            letter-spacing: 12px;
+            margin: 0;
+            color: #fff;
+            text-shadow: 0 0 15px rgba(255,255,255,0.5);
             text-transform: uppercase;
-            margin-bottom: 5px;
-            background: linear-gradient(to bottom, #fff, #777);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
         }
 
-        .divider {
-            width: 250px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
-            margin: 10px auto 40px;
+        .line {
+            width: 150px;
+            height: 3px;
+            background: #ffcf40;
+            margin: 10px auto;
+            border-radius: 2px;
         }
 
-        /* Top 3 Rajas Section */
-        .kingdom-grid {
+        /* Main Grid */
+        .container {
             display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-            max-width: 1000px;
+            flex-direction: column;
+            gap: 25px;
+            width: 90%;
+            max-width: 400px; /* Mobile friendly width */
+            padding-bottom: 50px;
         }
 
-        .king-box {
-            background: var(--card-bg);
+        .card {
+            background: #1a1a1a;
             border: 1px solid #333;
-            width: 280px;
-            padding: 30px 15px;
             border-radius: 15px;
+            padding: 20px;
             text-align: center;
-            transition: 0.4s;
+            transition: 0.3s;
             position: relative;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        .king-box:hover {
-            border-color: var(--neon-blue);
-            transform: translateY(-10px);
-            box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
+        /* Special Styling for First King */
+        .card.rank-1 {
+            border-color: #ffcf40;
+            box-shadow: 0 0 20px rgba(255, 207, 64, 0.2);
         }
 
-        /* DP Placeholder */
-        .king-dp {
-            width: 100px;
-            height: 100px;
+        .rank-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #ffcf40;
+            margin-bottom: 15px;
+        }
+
+        /* DP Circle */
+        .dp-circle {
+            width: 80px;
+            height: 80px;
+            background: #2a2a2a;
             border-radius: 50%;
-            background: #222;
             margin: 0 auto 15px;
-            border: 2px solid #444;
             display: flex;
             align-items: center;
             justify-content: center;
+            border: 2px solid #444;
             overflow: hidden;
         }
 
-        .king-dp img {
+        .dp-circle img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        .rank-label {
-            font-size: 0.8rem;
-            color: var(--neon-blue);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
-        }
-
-        .king-name {
-            font-size: 1.5rem;
+        .user-name {
+            font-size: 1.4rem;
             font-weight: bold;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
-        /* Unlock Button */
-        .unlock-btn {
+        /* Buttons */
+        .btn {
             background: transparent;
-            border: 1px solid var(--neon-gold);
-            color: var(--neon-gold);
-            padding: 10px 25px;
+            border: 1px solid #ffcf40;
+            color: #ffcf40;
+            padding: 8px 25px;
             border-radius: 5px;
             cursor: pointer;
             font-weight: bold;
-            transition: 0.3s;
+            text-transform: uppercase;
+            font-size: 0.8rem;
         }
 
-        .unlock-btn:hover {
-            background: var(--neon-gold);
-            color: black;
+        .btn:hover {
+            background: #ffcf40;
+            color: #000;
         }
 
-        .price-tag {
-            display: block;
-            margin-top: 10px;
-            font-size: 0.9rem;
-            opacity: 0.7;
+        .owned {
+            border-color: #00f2ff;
+            color: #00f2ff;
         }
 
-        /* Footer Text */
-        .footer-note {
-            margin-top: 50px;
-            font-style: italic;
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        .pay-more {
-            margin-top: 20px;
-            color: var(--neon-blue);
+        /* Footer */
+        .info-text {
+            color: #00f2ff;
             font-weight: bold;
-            letter-spacing: 1px;
+            margin-top: 20px;
+            font-size: 0.9rem;
             text-align: center;
         }
 
-        /* Special 1st King Style */
-        .first-king {
-            border-color: var(--neon-gold) !important;
-            box-shadow: 0 0 25px rgba(255, 207, 64, 0.15);
+        .footer-note {
+            color: #555;
+            font-size: 0.8rem;
+            margin-top: 10px;
+            font-style: italic;
         }
     </style>
 </head>
 <body>
 
-    <div class="header">
+    <header>
         <h1>KINGDOM</h1>
-        <div class="divider"></div>
-    </div>
+        <div class="line"></div>
+    </header>
 
-    <div class="kingdom-grid">
-        <div class="king-box first-king">
+    <div class="container">
+        <div class="card rank-1">
             <div class="rank-label">#01 First King</div>
-            <div class="king-dp">
-                <span style="color:#444">No DP</span>
+            <div class="dp-circle">
+                <span style="color:#555">DP</span>
             </div>
-            <div class="king-name">Anand</div>
-            <button class="unlock-btn">OWNED</button>
-            <span class="price-tag">Top Ranker</span>
+            <div class="user-name">Anand</div>
+            <button class="btn owned">OWNED</button>
         </div>
 
-        <div class="king-box">
+        <div class="card">
             <div class="rank-label">#02 Second King</div>
-            <div class="king-dp">
-                <span style="color:#444">?</span>
+            <div class="dp-circle">
+                <span style="color:#555">?</span>
             </div>
-            <div class="king-name">Empty</div>
-            <button class="unlock-btn">UNLOCK</button>
-            <span class="price-tag">₹ 100</span>
+            <div class="user-name">Empty</div>
+            <button class="btn">UNLOCK ₹100</button>
         </div>
 
-        <div class="king-box">
+        <div class="card">
             <div class="rank-label">#03 Third King</div>
-            <div class="king-dp">
-                <span style="color:#444">?</span>
+            <div class="dp-circle">
+                <span style="color:#555">?</span>
             </div>
-            <div class="king-name">Empty</div>
-            <button class="unlock-btn">UNLOCK</button>
-            <span class="price-tag">₹ 100</span>
+            <div class="user-name">Empty</div>
+            <button class="btn">UNLOCK ₹100</button>
         </div>
-    </div>
 
-    <p class="pay-more">If you pay more then you will be First King.</p>
-    
-    <div class="footer-note">
-        The Kingdom change in one week.
+        <div class="info-text">If you pay more then you will be First King.</div>
+        <div class="footer-note">The Kingdom change in one week.</div>
     </div>
 
 </body>
