@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE KINGDOM | MASTER EDIT</title>
+    <title>THE KINGDOM | RAGHAV EDITZ</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Outfit:wght@300;600&display=swap');
 
@@ -15,49 +15,56 @@
         }
 
         body {
-            margin: 0; background: #050505; color: #fff;
+            margin: 0; background: #000; color: #fff;
             font-family: 'Outfit', sans-serif; display: flex; flex-direction: column; align-items: center;
         }
 
-        /* --- MASTER ADMIN CONTROL --- */
+        /* --- MASTER ADMIN --- */
         .admin-bar {
-            position: fixed; top: 10px; right: 10px; z-index: 9999;
-            background: #bc1888; padding: 10px 20px; border-radius: 50px;
-            cursor: pointer; font-weight: 900; box-shadow: 0 0 20px rgba(188, 24, 136, 0.5);
+            position: fixed; top: 15px; right: 15px; z-index: 10000;
+            background: #bc1888; padding: 12px 25px; border-radius: 50px;
+            cursor: pointer; font-weight: 900; font-size: 14px;
         }
+        [contenteditable="true"] { border: 1px dashed var(--gold); background: rgba(255,255,255,0.1); }
 
-        [contenteditable="true"] { border: 1px dashed var(--gold); outline: none; background: rgba(255,255,255,0.05); padding: 2px; }
+        header { margin-top: 50px; text-align: center; }
+        h1 { font-family: 'Cinzel', serif; font-size: 3.5rem; color: var(--gold); margin: 0; text-shadow: 0 0 20px rgba(255,204,0,0.5); }
 
-        header { margin-top: 40px; text-align: center; }
-        h1 { font-family: 'Cinzel', serif; font-size: 3rem; margin: 0; color: var(--gold); }
+        /* --- KINGS POSITION FIX --- */
+        .stage { 
+            display: flex; align-items: flex-end; justify-content: center; 
+            gap: 20px; margin: 60px 0; width: 95%; max-width: 1200px; 
+        }
+        .throne { 
+            background: var(--glass); backdrop-filter: blur(15px); 
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 40px; 
+            padding: 30px 15px; text-align: center; flex: 1; transition: 0.3s;
+        }
+        .rank-1 { height: 480px; order: 2; border: 2px solid var(--gold); box-shadow: 0 0 30px rgba(255,204,0,0.2); }
+        .rank-2 { height: 380px; order: 1; } /* Left Side */
+        .rank-3 { height: 380px; order: 3; } /* Right Side */
 
-        /* --- STAGE LAYOUT --- */
-        .stage { display: flex; align-items: flex-end; justify-content: center; gap: 20px; margin: 50px 0; width: 95%; max-width: 1100px; }
-        .throne { background: var(--glass); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 40px; padding: 20px; text-align: center; flex: 1; }
-        .rank-1 { height: 450px; border: 2px solid var(--gold); order: 2; }
+        .photo-box { 
+            width: 140px; height: 140px; margin: 15px auto; 
+            border: 2px dashed #555; border-radius: 20px; overflow: hidden; 
+            cursor: pointer; display: flex; align-items: center; justify-content: center; 
+        }
+        .photo-box img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* --- IMAGE SLOT FIX --- */
-        .slot {
-            width: 100%; height: 80px; /* 3:1 ratio approximate */
-            margin: 10px 0; border-radius: 10px;
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 900; cursor: pointer;
-            background-size: contain; /* Isse plate kategi nahi */
-            background-repeat: no-repeat;
-            background-position: center;
-            transition: 0.3s;
+        /* --- SLOTS & PLATES FIX --- */
+        .members-section { width: 90%; max-width: 1100px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; margin-bottom: 50px; }
+        
+        .slot { 
+            height: 70px; border-radius: 12px; display: flex; 
+            align-items: center; justify-content: center; font-weight: 900; 
+            cursor: pointer; background-size: cover; background-position: center; 
+            transition: 0.3s; border: 1px solid rgba(255,255,255,0.1);
         }
 
         .gold-plate { background: linear-gradient(145deg, #bf953f, #fcf6ba, #b38728); color: #3d2b1f; }
         .silver-plate { background: linear-gradient(145deg, #999, #e0e0e0, #777); color: #222; }
         .bronze-plate { background: linear-gradient(145deg, #804a00, #cd7f32, #593300); color: #fff; }
-
-        /* --- SECTIONS --- */
-        .members-section { width: 90%; max-width: 1100px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; margin-bottom: 50px; }
-        
-        .photo-box { width: 100px; height: 100px; margin: 0 auto 15px; border: 2px dashed #444; border-radius: 50%; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-        .photo-box img { width: 100%; height: 100%; object-fit: cover; }
 
         input[type="file"] { display: none; }
     </style>
@@ -68,84 +75,94 @@
 
     <header>
         <h1 contenteditable="false">THE KINGDOM</h1>
-        <p style="color: var(--gold); letter-spacing: 5px;">RAGHAV EDITZ EXCLUSIVE</p>
+        <p style="color:var(--gold); letter-spacing:8px;">ANAND GFX SPECIAL</p>
     </header>
 
     <div class="stage">
-        <div class="throne rank-3"><span>🥉</span><div contenteditable="false">EMPTY</div></div>
-        
-        <div class="throne rank-1">
-            <span>👑</span>
-            <div class="photo-box" onclick="triggerSingle(this)">
-                <img src="" style="display:none;">
-                <span style="font-size:10px;">LOGO</span>
-            </div>
-            <div contenteditable="false" style="font-family:'Cinzel'; font-size:24px;">SUPREME KING</div>
+        <div class="throne rank-2">
+            <span style="font-size:40px;">🥈</span>
+            <div class="photo-box" onclick="triggerFile(this)"><img src="" style="display:none;"><span style="font-size:12px;">UPLOAD</span></div>
+            <div contenteditable="false" style="font-family:'Cinzel';">EMPTY</div>
         </div>
 
-        <div class="throne rank-2"><span>🥈</span><div contenteditable="false">EMPTY</div></div>
+        <div class="throne rank-1">
+            <span style="font-size:60px;">👑</span>
+            <div class="photo-box" style="width:160px; height:160px;" onclick="triggerFile(this)">
+                <img src="" style="display:none;">
+                <span style="font-size:12px;">KING LOGO</span>
+            </div>
+            <div contenteditable="false" style="font-family:'Cinzel'; font-size:28px; color:var(--gold);">SUPREME KING</div>
+        </div>
+
+        <div class="throne rank-3">
+            <span style="font-size:40px;">🥉</span>
+            <div class="photo-box" onclick="triggerFile(this)"><img src="" style="display:none;"><span style="font-size:12px;">UPLOAD</span></div>
+            <div contenteditable="false" style="font-family:'Cinzel';">EMPTY</div>
+        </div>
     </div>
 
     <div class="members-section">
-        <h2 style="color:var(--gold)">GOLD SLOTS</h2>
+        <h2 style="color:var(--gold);">GOLD MEMBERS</h2>
         <div class="grid" id="gold-grid"></div>
 
-        <h2 style="color:var(--silver)">SILVER SLOTS</h2>
+        <h2 style="color:var(--silver);">SILVER MEMBERS</h2>
         <div class="grid" id="silver-grid"></div>
 
-        <h2 style="color:var(--bronze)">BRONZE SLOTS</h2>
+        <h2 style="color:var(--bronze);">BRONZE MEMBERS</h2>
         <div class="grid" id="bronze-grid"></div>
     </div>
 
-    <input type="file" id="file-input" onchange="applyImage(event)">
+    <input type="file" id="master-upload" onchange="processFile(event)">
 
     <script>
         let isEdit = false;
-        let targetEl = null;
+        let activeEl = null;
 
         function toggleEdit() {
             isEdit = !isEdit;
             document.querySelectorAll('[contenteditable]').forEach(el => el.contentEditable = isEdit);
-            document.querySelector('.admin-bar').innerText = isEdit ? "SAVE CHANGES" : "ENABLE MASTER EDIT";
+            document.querySelector('.admin-bar').innerText = isEdit ? "DONE & SAVE" : "ENABLE MASTER EDIT";
+            document.querySelector('.admin-bar').style.background = isEdit ? "#28a745" : "#bc1888";
         }
 
-        function triggerSingle(el) {
-            targetEl = el;
-            document.getElementById('file-input').click();
+        function triggerFile(el) {
+            activeEl = el;
+            document.getElementById('master-upload').click();
         }
 
-        function applyImage(e) {
+        function processFile(e) {
             const file = e.target.files[0];
             if(!file) return;
             const reader = new FileReader();
             reader.onload = function(event) {
-                if(targetEl.classList.contains('photo-box')) {
-                    const img = targetEl.querySelector('img');
+                if(activeEl.classList.contains('photo-box')) {
+                    const img = activeEl.querySelector('img');
                     img.src = event.target.result;
                     img.style.display = 'block';
-                    targetEl.querySelector('span').style.display = 'none';
+                    activeEl.querySelector('span').style.display = 'none';
                 } else {
-                    targetEl.style.backgroundImage = `url('${event.target.result}')`;
-                    targetEl.innerText = ""; // Photo aane par text hata do
+                    activeEl.style.backgroundImage = `url('${event.target.result}')`;
+                    activeEl.style.color = 'transparent'; // Photo aane par text hide karein
                 }
-            }
+            };
             reader.readAsDataURL(file);
         }
 
-        function makeGrid(id, count, css) {
+        function createSlots(id, count, plateClass) {
             const container = document.getElementById(id);
             for(let i=1; i<=count; i++) {
                 const div = document.createElement('div');
-                div.className = `slot ${css}`;
-                div.innerText = `SLOT ${i}`;
-                div.onclick = function() { triggerSingle(this); };
+                div.className = `slot ${plateClass}`;
+                div.innerText = `NAME PLATE ${i}`;
+                div.onclick = function() { triggerFile(this); };
                 container.appendChild(div);
             }
         }
 
-        makeGrid('gold-grid', 8, 'gold-plate');
-        makeGrid('silver-grid', 8, 'silver-plate');
-        makeGrid('bronze-grid', 8, 'bronze-plate');
+        // Slots sankhya set karein
+        createSlots('gold-grid', 12, 'gold-plate');
+        createSlots('silver-grid', 12, 'silver-plate');
+        createSlots('bronze-grid', 12, 'bronze-plate');
     </script>
 </body>
 </html>
