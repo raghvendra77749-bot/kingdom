@@ -6,82 +6,89 @@
     <title>THE KINGDOM | RAGHAV EDITZ</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Outfit:wght@300;600&display=swap');
+
         :root { --gold: #ffcc00; --silver: #e0e0e0; --bronze: #cd7f32; }
-        body { margin: 0; background: #000; color: #fff; font-family: 'Outfit', sans-serif; display: flex; flex-direction: column; align-items: center; background-image: radial-gradient(circle at 50% 50%, #111 0%, #000 100%); }
-        .admin-bar { position: fixed; top: 20px; right: 20px; z-index: 10000; background: #bc1888; padding: 12px 25px; border-radius: 50px; cursor: pointer; font-weight: 900; box-shadow: 0 0 20px rgba(188, 24, 136, 0.6); }
+
+        body {
+            margin: 0; background: #000; color: #fff;
+            font-family: 'Outfit', sans-serif; display: flex; flex-direction: column; align-items: center;
+            background-image: radial-gradient(circle at 50% 50%, #111 0%, #000 100%);
+        }
+
+        .admin-bar {
+            position: fixed; top: 20px; right: 20px; z-index: 10000;
+            background: #bc1888; padding: 12px 25px; border-radius: 50px;
+            cursor: pointer; font-weight: 900; box-shadow: 0 0 20px rgba(188, 24, 136, 0.6);
+        }
+
         header { margin-top: 60px; text-align: center; }
         h1 { font-family: 'Cinzel', serif; font-size: 3.5rem; color: var(--gold); margin: 0; letter-spacing: 8px; }
+
         .stage { display: flex; align-items: flex-end; justify-content: center; gap: 20px; margin: 50px 0; width: 95%; max-width: 1200px; }
         .throne { background: rgba(255,255,255,0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); border-radius: 40px; padding: 25px 10px; text-align: center; flex: 1; }
+        
         .photo-box { width: 140px; height: 140px; margin: 15px auto; border: 2px dashed #444; border-radius: 20px; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; position: relative; }
         .photo-box img { width: 100%; height: 100%; object-fit: cover; position: absolute; display: none; z-index: 10; }
+
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; margin-bottom: 50px; width: 90%; max-width: 1100px; }
-        .slot { height: 90px; display: flex; align-items: center; justify-content: center; font-weight: 900; cursor: pointer; border-radius: 10px; font-family: 'Cinzel', serif; position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.2); transition: 0.3s; }
+        
+        /* EXACT OLD PLATE STYLE */
+        .slot { 
+            height: 80px; display: flex; align-items: center; justify-content: center; 
+            font-weight: 900; cursor: pointer; border-radius: 10px;
+            font-family: 'Cinzel', serif; position: relative; overflow: hidden;
+            transition: 0.3s; background-size: cover;
+        }
+
         .gold-plate { background: linear-gradient(145deg, #bf953f, #fcf6ba, #b38728); color: #3d2b1f; }
         .silver-plate { background: linear-gradient(145deg, #999, #e0e0e0, #777); color: #222; }
         .bronze-plate { background: linear-gradient(145deg, #804a00, #cd7f32, #593300); color: #fff; }
-        .slot img { position: absolute; width: 100%; height: 100%; object-fit: cover; z-index: 2; display: none; }
-        .slot-text { z-index: 5; width: 100%; text-align: center; outline: none; text-shadow: 0 0 5px rgba(0,0,0,0.5); }
-        .no-bg { background: #000 !important; border: 1px solid #444; }
+
+        .slot img { position: absolute; width: 100%; height: 100%; object-fit: cover; z-index: 1; display: none; }
+        .slot-text { z-index: 5; width: 100%; text-align: center; outline: none; }
+
         input[type="file"] { display: none; }
     </style>
 </head>
 <body>
 
-    <div class="admin-bar" onclick="saveToFirebase()">SAVE & LOCK</div>
+    <div class="admin-bar" onclick="saveData()">SAVE & LOCK</div>
 
     <header>
-        <h1 contenteditable="true" id="main-title">THE KINGDOM</h1>
+        <h1 contenteditable="true" id="title">THE KINGDOM</h1>
         <p style="color:var(--gold); letter-spacing:5px;">RAGHAV EDITZ SPECIAL</p>
     </header>
 
     <div class="stage">
-        <div class="throne">🥈<div class="photo-box" id="p2" onclick="openFile(this, 'king')"><img id="img-p2" src=""><span>UP</span></div><div id="n2" contenteditable="true">EMPTY</div></div>
-        <div class="throne" style="border: 2px solid gold;">👑<div class="photo-box" id="p1" style="width:160px; height:160px;" onclick="openFile(this, 'king')"><img id="img-p1" src=""><span>KING LOGO</span></div><div id="n1" contenteditable="true" style="color:var(--gold);">SUPREME KING</div></div>
-        <div class="throne">🥉<div class="photo-box" id="p3" onclick="openFile(this, 'king')"><img id="img-p3" src=""><span>UP</span></div><div id="n3" contenteditable="true">EMPTY</div></div>
+        <div class="throne">🥈<div class="photo-box" id="p2" onclick="openFile(this, 'king')"><img src=""><span>UP</span></div><div id="n2" contenteditable="true">EMPTY</div></div>
+        <div class="throne" style="border: 2px solid gold;">👑<div class="photo-box" id="p1" style="width:160px; height:160px;" onclick="openFile(this, 'king')"><img src=""><span>KING LOGO</span></div><div id="n1" contenteditable="true" style="color:var(--gold);">SUPREME KING</div></div>
+        <div class="throne">🥉<div class="photo-box" id="p3" onclick="openFile(this, 'king')"><img src=""><span>UP</span></div><div id="n3" contenteditable="true">EMPTY</div></div>
     </div>
 
-    <h2 style="color:var(--gold)">GOLD (10)</h2><div class="grid" id="gold-grid"></div>
-    <h2 style="color:var(--silver)">SILVER (15)</h2><div class="grid" id="silver-grid"></div>
-    <h2 style="color:var(--bronze)">BRONZE (20)</h2><div class="grid" id="bronze-grid"></div>
+    <h2 style="color:var(--gold)">GOLD LINEAGE (10)</h2><div class="grid" id="gold-grid"></div>
+    <h2 style="color:var(--silver)">SILVER DYNASTY (15)</h2><div class="grid" id="silver-grid"></div>
+    <h2 style="color:var(--bronze)">BRONZE LEGION (20)</h2><div class="grid" id="bronze-grid"></div>
 
     <input type="file" id="file-input" onchange="handleFile(event)">
 
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
-
     <script>
-        // --- STEP 1: FIREBASE SETUP ---
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT.firebaseapp.com",
-            databaseURL: "YOUR_DATABASE_URL",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT.appspot.com",
-            messagingSenderId: "YOUR_ID",
-            appId: "YOUR_APP_ID"
-        };
+        let targetEl = null;
+        let targetTier = null;
 
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
-
-        let currentTarget = null;
-        let currentTier = null;
-
-        // --- STEP 2: CREATE GRID ---
-        function createPlates(boxId, count, type) {
-            const container = document.getElementById(boxId);
+        // --- GENERATE PLATES (Old Look Fixed) ---
+        function createGrid(id, count, css) {
+            const container = document.getElementById(id);
             for(let i=1; i<=count; i++) {
                 const div = document.createElement('div');
-                div.className = `slot ${type}`;
-                div.id = `${boxId}-s${i}`;
-                div.innerHTML = `<img class="tier-img" id="img-${div.id}"><div class="slot-text" contenteditable="true" id="txt-${div.id}">PLATE ${i}</div>`;
-                div.onclick = function(e) { if(e.target.className !== 'slot-text') openFile(this, type); };
+                div.className = `slot ${css}`;
+                div.id = `${id}-s${i}`;
+                div.innerHTML = `<img id="img-${div.id}"><div class="slot-text" contenteditable="true" id="txt-${div.id}">PLATE ${i}</div>`;
+                div.onclick = function(e) { if(e.target.className !== 'slot-text') openFile(this, css); };
                 container.appendChild(div);
             }
         }
 
-        function openFile(el, tier) { currentTarget = el; currentTier = tier; document.getElementById('file-input').click(); }
+        function openFile(el, tier) { targetEl = el; targetTier = tier; document.getElementById('file-input').click(); }
 
         function handleFile(e) {
             const file = e.target.files[0];
@@ -89,74 +96,51 @@
             const reader = new FileReader();
             reader.onload = function(ev) {
                 const imgData = ev.target.result;
-                if(currentTier === 'king') {
-                    const img = currentTarget.querySelector('img');
+                if(targetTier === 'king') {
+                    const img = targetEl.querySelector('img');
                     img.src = imgData; img.style.display = 'block';
-                    if(currentTarget.querySelector('span')) currentTarget.querySelector('span').style.display = 'none';
+                    if(targetEl.querySelector('span')) targetEl.querySelector('span').style.display = 'none';
                 } else {
-                    document.querySelectorAll(`.${currentTier}`).forEach(plate => {
+                    // MASTER SYNC: Saari plates pe photo
+                    document.querySelectorAll(`.${targetTier}`).forEach(plate => {
                         const img = plate.querySelector('img');
                         img.src = imgData; img.style.display = 'block';
-                        plate.classList.add('no-bg');
                     });
                 }
             };
             reader.readAsDataURL(file);
         }
 
-        // --- STEP 3: SAVE & LOCK (FIREBASE) ---
-        function saveToFirebase() {
+        function saveData() {
             const data = { texts: {}, imgs: {} };
-            
-            // Save Texts
             document.querySelectorAll('[contenteditable="true"]').forEach(el => data.texts[el.id] = el.innerText);
-            
-            // Save Images
             document.querySelectorAll('img').forEach(img => {
-                if(img.src.startsWith('data:image')) {
-                    data.imgs[img.id] = img.src;
-                }
+                if(img.src.startsWith('data:image')) data.imgs[img.id || img.parentElement.id] = img.src;
             });
-
-            db.ref('the_kingdom_data').set(data)
-            .then(() => alert("Bhai, Sab Cloud par Save ho gaya!"))
-            .catch(err => {
-                console.error(err);
-                alert("Save fail: " + err.message);
-            });
+            localStorage.setItem('KINGDOM_V10_FINAL', JSON.stringify(data));
+            alert("Bhai, Puraane design mein sab Save ho gaya!");
         }
 
-        // --- STEP 4: LOAD FROM FIREBASE ---
-        function loadFromFirebase() {
-            createPlates('gold-grid', 10, 'gold-plate');
-            createPlates('silver-grid', 15, 'silver-plate');
-            createPlates('bronze-grid', 20, 'bronze-plate');
+        function loadData() {
+            createGrid('gold-grid', 10, 'gold-plate');
+            createGrid('silver-grid', 15, 'silver-plate');
+            createGrid('bronze-grid', 20, 'bronze-plate');
 
-            db.ref('the_kingdom_data').once('value').then((snapshot) => {
-                const data = snapshot.val();
-                if(!data) return;
-
-                if(data.texts) {
-                    for(let id in data.texts) {
-                        const el = document.getElementById(id);
-                        if(el) el.innerText = data.texts[id];
-                    }
+            const saved = localStorage.getItem('KINGDOM_V10_FINAL');
+            if(!saved) return;
+            const data = JSON.parse(saved);
+            for(let id in data.texts) if(document.getElementById(id)) document.getElementById(id).innerText = data.texts[id];
+            for(let id in data.imgs) {
+                let img = document.getElementById(id);
+                if(img && img.tagName === 'IMG') { img.src = data.imgs[id]; img.style.display = 'block'; }
+                else if(document.getElementById(id)) {
+                    let kingImg = document.getElementById(id).querySelector('img');
+                    kingImg.src = data.imgs[id]; kingImg.style.display = 'block';
+                    document.getElementById(id).querySelector('span').style.display = 'none';
                 }
-                if(data.imgs) {
-                    for(let id in data.imgs) {
-                        const img = document.getElementById(id);
-                        if(img) {
-                            img.src = data.imgs[id];
-                            img.style.display = 'block';
-                            if(img.parentElement.classList.contains('slot')) img.parentElement.classList.add('no-bg');
-                            if(img.parentElement.querySelector('span')) img.parentElement.querySelector('span').style.display = 'none';
-                        }
-                    }
-                }
-            });
+            }
         }
-
-        window.onload = loadFromFirebase;
+        window.onload = loadData;
     </script>
 </body>
 </html>
