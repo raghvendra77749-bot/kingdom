@@ -44,15 +44,19 @@
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; margin-bottom: 50px; }
         
         .slot { 
-            height: 80px; display: flex; align-items: center; justify-content: center; 
-            font-weight: 900; cursor: pointer; background-size: contain; 
+            height: 90px; display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            font-weight: 900; cursor: pointer; background-size: cover; 
             background-repeat: no-repeat; background-position: center; transition: 0.3s;
-            font-family: 'Cinzel', serif;
+            font-family: 'Cinzel', serif; position: relative; border-radius: 10px;
+            overflow: hidden; border: 1px solid rgba(255,255,255,0.1);
         }
 
-        .gold-plate { background-image: linear-gradient(145deg, #bf953f, #fcf6ba, #b38728); color: #3d2b1f; border-radius: 10px; }
-        .silver-plate { background-image: linear-gradient(145deg, #999, #e0e0e0, #777); color: #222; border-radius: 10px; }
-        .bronze-plate { background-image: linear-gradient(145deg, #804a00, #cd7f32, #593300); color: #fff; border-radius: 10px; }
+        .gold-plate { background-image: linear-gradient(145deg, #bf953f, #fcf6ba, #b38728); color: #3d2b1f; }
+        .silver-plate { background-image: linear-gradient(145deg, #999, #e0e0e0, #777); color: #222; }
+        .bronze-plate { background-image: linear-gradient(145deg, #804a00, #cd7f32, #593300); color: #fff; }
+
+        .slot-text { z-index: 2; width: 100%; text-align: center; outline: none; }
+        .slot img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; opacity: 0.8; display: none; }
 
         input[type="file"] { display: none; }
     </style>
@@ -85,11 +89,13 @@
     </div>
 
     <div class="members-section">
-        <h2 style="color:var(--gold)">GOLD LINEAGE</h2>
+        <h2 style="color:var(--gold)">GOLD LINEAGE (10)</h2>
         <div class="grid" id="gold-grid"></div>
-        <h2 style="color:var(--silver)">SILVER DYNASTY</h2>
+
+        <h2 style="color:var(--silver)">SILVER DYNASTY (15)</h2>
         <div class="grid" id="silver-grid"></div>
-        <h2 style="color:var(--bronze)">BRONZE LEGION</h2>
+
+        <h2 style="color:var(--bronze)">BRONZE LEGION (20)</h2>
         <div class="grid" id="bronze-grid"></div>
     </div>
 
@@ -98,23 +104,34 @@
     <script>
         let activeEl = null;
 
-        // --- SLOTS GENERATION ---
+        // --- SLOTS GENERATION (FIXED COUNTS) ---
+        function generateAllSlots() {
+            createSlots('gold-grid', 10, 'gold-plate');
+            createSlots('silver-grid', 15, 'silver-plate');
+            createSlots('bronze-grid', 20, 'bronze-plate');
+        }
+
         function createSlots(id, count, css) {
             const container = document.getElementById(id);
+            container.innerHTML = ""; // Clear existing
             for(let i=1; i<=count; i++) {
                 const div = document.createElement('div');
                 div.className = `slot ${css}`;
-                div.id = `${id}-slot-${i}`; // Unique ID for saving
-                div.innerText = `PLATE ${i}`;
-                div.contentEditable = "true";
-                div.onclick = function() { triggerFile(this); };
+                div.id = `${id}-slot-${i}`;
+                
+                div.innerHTML = `
+                    <img src="" id="img-${div.id}">
+                    <div class="slot-text" contenteditable="true" id="text-${div.id}">PLATE ${i}</div>
+                `;
+
+                // Click image to upload, click text to edit
+                div.onclick = function(e) {
+                    if(e.target.classList.contains('slot-text')) return;
+                    triggerFile(this);
+                };
                 container.appendChild(div);
             }
         }
-
-        createSlots('gold-grid', 10, 'gold-plate');
-        createSlots('silver-grid', 15, 'silver-plate');
-        createSlots('bronze-grid', 20, 'bronze-plate');
 
         // --- UPLOAD LOGIC ---
         function triggerFile(el) {
@@ -124,7 +141,7 @@
 
         function processFile(e) {
             const file = e.target.files[0];
-            if(!file) return;
+            if(!file || !activeEl) return;
             const reader = new FileReader();
             reader.onload = function(event) {
                 const imgData = event.target.result;
@@ -134,62 +151,62 @@
                     img.style.display = 'block';
                     activeEl.querySelector('span').style.display = 'none';
                 } else {
-                    activeEl.style.backgroundImage = `url('${imgData}')`;
-                    activeEl.innerText = ""; 
+                    const img = activeEl.querySelector('img');
+                    img.src = imgData;
+                    img.style.display = 'block';
                 }
             };
             reader.readAsDataURL(file);
         }
 
-        // --- DATA SAVING (FIXED) ---
+        // --- DATA SAVING ---
         function saveAllData() {
             const data = { texts: {}, images: {} };
 
-            // Save Names & Slot Texts
+            // Save all editable texts
             document.querySelectorAll('[contenteditable="true"]').forEach(el => {
                 if(el.id) data.texts[el.id] = el.innerText;
             });
 
-            // Save Slot Plate Images
-            document.querySelectorAll('.slot').forEach(el => {
-                if(el.style.backgroundImage) data.images[el.id] = el.style.backgroundImage;
-            });
-
-            // Save King Logos
-            document.querySelectorAll('.photo-box img').forEach(img => {
-                if(img.src && img.style.display !== 'none') {
-                    data.images[img.parentElement.id] = img.src;
+            // Save all images (Slots & King boxes)
+            document.querySelectorAll('img').forEach(img => {
+                if(img.src && !img.src.endsWith('undefined') && img.src !== window.location.href) {
+                    data.images[img.id || img.parentElement.id] = img.src;
                 }
             });
 
-            localStorage.setItem('kingdomFinalData', JSON.stringify(data));
-            alert("Bhai, data fix ho gaya! Ab refresh karo, sab wahi milega.");
+            localStorage.setItem('kingdomFinalData_v2', JSON.stringify(data));
+            alert("Bhai, Sab kuch save ho gaya! Gold(10), Silver(15), Bronze(20) ab permanent hain.");
         }
 
-        // --- LOAD DATA ON START ---
+        // --- LOAD DATA ---
         function loadData() {
-            const saved = localStorage.getItem('kingdomFinalData');
+            generateAllSlots(); // First generate, then fill
+            const saved = localStorage.getItem('kingdomFinalData_v2');
             if(!saved) return;
             const data = JSON.parse(saved);
 
-            // Restore Texts
             for(let id in data.texts) {
                 const el = document.getElementById(id);
                 if(el) el.innerText = data.texts[id];
             }
 
-            // Restore Images
             for(let id in data.images) {
                 const el = document.getElementById(id);
                 if(!el) continue;
-                if(el.classList.contains('slot')) {
-                    el.style.backgroundImage = data.images[id];
-                    el.innerText = "";
-                } else if(el.classList.contains('photo-box')) {
+                
+                if(el.tagName === "IMG") {
+                    el.src = data.images[id];
+                    el.style.display = 'block';
+                    if(el.parentElement.querySelector('span')) el.parentElement.querySelector('span').style.display = 'none';
+                } else {
+                    // For king boxes
                     const img = el.querySelector('img');
-                    img.src = data.images[id];
-                    img.style.display = 'block';
-                    el.querySelector('span').style.display = 'none';
+                    if(img) {
+                        img.src = data.images[id];
+                        img.style.display = 'block';
+                        if(el.querySelector('span')) el.querySelector('span').style.display = 'none';
+                    }
                 }
             }
         }
