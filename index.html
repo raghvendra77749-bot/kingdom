@@ -29,34 +29,32 @@
         header { margin-top: 60px; text-align: center; }
         h1 { font-family: 'Cinzel', serif; font-size: 3.5rem; color: var(--gold); margin: 0; letter-spacing: 8px; }
 
-        /* --- KINGS LAYOUT --- */
         .stage { display: flex; align-items: flex-end; justify-content: center; gap: 20px; margin: 50px 0; width: 95%; max-width: 1200px; }
         .throne { background: rgba(255,255,255,0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); border-radius: 40px; padding: 25px 10px; text-align: center; flex: 1; }
         .rank-1 { height: 480px; order: 2; border: 2px solid var(--gold); }
         .rank-2 { height: 380px; order: 1; }
         .rank-3 { height: 380px; order: 3; }
 
-        .photo-box { width: 140px; height: 140px; margin: 15px auto; border: 2px dashed #444; border-radius: 20px; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-        .photo-box img { width: 100%; height: 100%; object-fit: cover; }
+        .photo-box { width: 140px; height: 140px; margin: 15px auto; border: 2px dashed #444; border-radius: 20px; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; position: relative; }
+        .photo-box img { width: 100%; height: 100%; object-fit: cover; position: absolute; top:0; left:0; }
 
-        /* --- PLATE SECTION --- */
         .members-section { width: 90%; max-width: 1100px; }
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; margin-bottom: 50px; }
         
+        /* SLOT DESIGN */
         .slot { 
-            height: 90px; display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            font-weight: 900; cursor: pointer; background-size: cover; 
-            background-repeat: no-repeat; background-position: center; transition: 0.3s;
-            font-family: 'Cinzel', serif; position: relative; border-radius: 10px;
-            overflow: hidden; border: 1px solid rgba(255,255,255,0.1);
+            height: 90px; display: flex; align-items: center; justify-content: center; 
+            font-weight: 900; cursor: pointer; border-radius: 10px;
+            font-family: 'Cinzel', serif; position: relative; overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1); transition: 0.3s;
         }
 
-        .gold-plate { background-image: linear-gradient(145deg, #bf953f, #fcf6ba, #b38728); color: #3d2b1f; }
-        .silver-plate { background-image: linear-gradient(145deg, #999, #e0e0e0, #777); color: #222; }
-        .bronze-plate { background-image: linear-gradient(145deg, #804a00, #cd7f32, #593300); color: #fff; }
+        .gold-plate { background: linear-gradient(145deg, #bf953f, #fcf6ba, #b38728); color: #3d2b1f; }
+        .silver-plate { background: linear-gradient(145deg, #999, #e0e0e0, #777); color: #222; }
+        .bronze-plate { background: linear-gradient(145deg, #804a00, #cd7f32, #593300); color: #fff; }
 
-        .slot-text { z-index: 2; width: 100%; text-align: center; outline: none; }
-        .slot img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; opacity: 0.8; display: none; }
+        .slot-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; display: none; }
+        .slot-text { z-index: 5; width: 100%; text-align: center; outline: none; position: relative; }
 
         input[type="file"] { display: none; }
     </style>
@@ -73,28 +71,26 @@
     <div class="stage">
         <div class="throne rank-2">
             <span>🥈</span>
-            <div class="photo-box" id="box-r2" onclick="triggerFile(this)"><img src="" style="display:none;"><span>UP</span></div>
-            <div id="name-r2" contenteditable="true" style="font-family:'Cinzel';">EMPTY</div>
+            <div class="photo-box" id="box-r2" onclick="triggerFile(this)"><img src="" style="display:none;"><span class="label">UP</span></div>
+            <div id="name-r2" contenteditable="true">EMPTY</div>
         </div>
         <div class="throne rank-1">
             <span>👑</span>
-            <div class="photo-box" id="box-r1" style="width:160px; height:160px;" onclick="triggerFile(this)"><img src="" style="display:none;"><span>KING LOGO</span></div>
-            <div id="name-r1" contenteditable="true" style="font-family:'Cinzel'; font-size:24px; color:var(--gold);">SUPREME KING</div>
+            <div class="photo-box" id="box-r1" style="width:160px; height:160px;" onclick="triggerFile(this)"><img src="" style="display:none;"><span class="label">KING LOGO</span></div>
+            <div id="name-r1" contenteditable="true" style="font-size:24px; color:var(--gold);">SUPREME KING</div>
         </div>
         <div class="throne rank-3">
             <span>🥉</span>
-            <div class="photo-box" id="box-r3" onclick="triggerFile(this)"><img src="" style="display:none;"><span>UP</span></div>
-            <div id="name-r3" contenteditable="true" style="font-family:'Cinzel';">EMPTY</div>
+            <div class="photo-box" id="box-r3" onclick="triggerFile(this)"><img src="" style="display:none;"><span class="label">UP</span></div>
+            <div id="name-r3" contenteditable="true">EMPTY</div>
         </div>
     </div>
 
     <div class="members-section">
         <h2 style="color:var(--gold)">GOLD LINEAGE (10)</h2>
         <div class="grid" id="gold-grid"></div>
-
         <h2 style="color:var(--silver)">SILVER DYNASTY (15)</h2>
         <div class="grid" id="silver-grid"></div>
-
         <h2 style="color:var(--bronze)">BRONZE LEGION (20)</h2>
         <div class="grid" id="bronze-grid"></div>
     </div>
@@ -104,36 +100,32 @@
     <script>
         let activeEl = null;
 
-        // --- SLOTS GENERATION (FIXED COUNTS) ---
-        function generateAllSlots() {
-            createSlots('gold-grid', 10, 'gold-plate');
-            createSlots('silver-grid', 15, 'silver-plate');
-            createSlots('bronze-grid', 20, 'bronze-plate');
+        function init() {
+            createGrid('gold-grid', 10, 'gold-plate');
+            createGrid('silver-grid', 15, 'silver-plate');
+            createGrid('bronze-grid', 20, 'bronze-plate');
+            loadAllData();
         }
 
-        function createSlots(id, count, css) {
-            const container = document.getElementById(id);
-            container.innerHTML = ""; // Clear existing
+        function createGrid(containerId, count, plateClass) {
+            const container = document.getElementById(containerId);
             for(let i=1; i<=count; i++) {
                 const div = document.createElement('div');
-                div.className = `slot ${css}`;
-                div.id = `${id}-slot-${i}`;
-                
+                div.className = `slot ${plateClass}`;
+                div.id = `${containerId}-s${i}`;
                 div.innerHTML = `
-                    <img src="" id="img-${div.id}">
-                    <div class="slot-text" contenteditable="true" id="text-${div.id}">PLATE ${i}</div>
+                    <img class="slot-img" id="img-${div.id}">
+                    <div class="slot-text" contenteditable="true" id="txt-${div.id}">PLATE ${i}</div>
                 `;
-
-                // Click image to upload, click text to edit
                 div.onclick = function(e) {
                     if(e.target.classList.contains('slot-text')) return;
-                    triggerFile(this);
+                    activeEl = this;
+                    document.getElementById('master-upload').click();
                 };
                 container.appendChild(div);
             }
         }
 
-        // --- UPLOAD LOGIC ---
         function triggerFile(el) {
             activeEl = el;
             document.getElementById('master-upload').click();
@@ -145,44 +137,42 @@
             const reader = new FileReader();
             reader.onload = function(event) {
                 const imgData = event.target.result;
-                if(activeEl.classList.contains('photo-box')) {
-                    const img = activeEl.querySelector('img');
-                    img.src = imgData;
-                    img.style.display = 'block';
-                    activeEl.querySelector('span').style.display = 'none';
-                } else {
-                    const img = activeEl.querySelector('img');
-                    img.src = imgData;
-                    img.style.display = 'block';
+                let targetImg = activeEl.querySelector('img');
+                targetImg.src = imgData;
+                targetImg.style.display = 'block';
+                
+                // Plate fix: Background hide karo agar photo aa gayi
+                if(activeEl.classList.contains('slot')) {
+                    activeEl.style.background = "black"; 
+                }
+                if(activeEl.querySelector('.label')) {
+                    activeEl.querySelector('.label').style.display = 'none';
                 }
             };
             reader.readAsDataURL(file);
         }
 
-        // --- DATA SAVING ---
         function saveAllData() {
-            const data = { texts: {}, images: {} };
+            const kingdomData = { texts: {}, images: {} };
 
-            // Save all editable texts
+            // Save Texts
             document.querySelectorAll('[contenteditable="true"]').forEach(el => {
-                if(el.id) data.texts[el.id] = el.innerText;
+                kingdomData.texts[el.id] = el.innerText;
             });
 
-            // Save all images (Slots & King boxes)
+            // Save Images
             document.querySelectorAll('img').forEach(img => {
-                if(img.src && !img.src.endsWith('undefined') && img.src !== window.location.href) {
-                    data.images[img.id || img.parentElement.id] = img.src;
+                if(img.src && img.src.startsWith('data:image')) {
+                    kingdomData.images[img.id || img.parentElement.id] = img.src;
                 }
             });
 
-            localStorage.setItem('kingdomFinalData_v2', JSON.stringify(data));
-            alert("Bhai, Sab kuch save ho gaya! Gold(10), Silver(15), Bronze(20) ab permanent hain.");
+            localStorage.setItem('KINGDOM_V3_FINAL', JSON.stringify(kingdomData));
+            alert("Bhai, Sab Save Ho Gaya! Refresh Karke Check Karlo.");
         }
 
-        // --- LOAD DATA ---
-        function loadData() {
-            generateAllSlots(); // First generate, then fill
-            const saved = localStorage.getItem('kingdomFinalData_v2');
+        function loadAllData() {
+            const saved = localStorage.getItem('KINGDOM_V3_FINAL');
             if(!saved) return;
             const data = JSON.parse(saved);
 
@@ -192,26 +182,26 @@
             }
 
             for(let id in data.images) {
-                const el = document.getElementById(id);
-                if(!el) continue;
-                
-                if(el.tagName === "IMG") {
-                    el.src = data.images[id];
-                    el.style.display = 'block';
-                    if(el.parentElement.querySelector('span')) el.parentElement.querySelector('span').style.display = 'none';
-                } else {
-                    // For king boxes
-                    const img = el.querySelector('img');
-                    if(img) {
-                        img.src = data.images[id];
-                        img.style.display = 'block';
-                        if(el.querySelector('span')) el.querySelector('span').style.display = 'none';
+                let img = document.getElementById(id); // For slot images
+                if(!img) {
+                    let parent = document.getElementById(id); // For king boxes
+                    if(parent) img = parent.querySelector('img');
+                }
+
+                if(img) {
+                    img.src = data.images[id];
+                    img.style.display = 'block';
+                    if(img.parentElement.classList.contains('slot')) {
+                        img.parentElement.style.background = "black";
+                    }
+                    if(img.parentElement.querySelector('.label')) {
+                        img.parentElement.querySelector('.label').style.display = 'none';
                     }
                 }
             }
         }
 
-        window.onload = loadData;
+        window.onload = init;
     </script>
 </body>
 </html>
