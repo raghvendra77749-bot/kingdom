@@ -1,192 +1,98 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE KINGDOM | PERMANENT SAVE</title>
+    <title>The Kingdom - Slots</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Outfit:wght@300;600&display=swap');
-
-        :root {
-            --gold: #ffcc00; --silver: #e0e0e0; --bronze: #cd7f32;
-        }
-
-        body {
-            margin: 0; background: #000; color: #fff;
-            font-family: 'Outfit', sans-serif; display: flex; flex-direction: column; align-items: center;
-            background-image: radial-gradient(circle at 50% 50%, #111 0%, #000 100%);
-        }
-
-        .admin-bar {
-            position: fixed; top: 20px; right: 20px; z-index: 10000;
-            background: #bc1888; padding: 12px 25px; border-radius: 50px;
-            cursor: pointer; font-weight: 900; box-shadow: 0 0 20px rgba(188, 24, 136, 0.6);
-        }
-
-        header { margin-top: 60px; text-align: center; }
-        h1 { font-family: 'Cinzel', serif; font-size: 3.5rem; color: var(--gold); margin: 0; letter-spacing: 8px; }
-
-        .stage { display: flex; align-items: flex-end; justify-content: center; gap: 20px; margin: 50px 0; width: 95%; max-width: 1200px; }
-        .throne { background: rgba(255,255,255,0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); border-radius: 40px; padding: 25px 10px; text-align: center; flex: 1; }
-        .rank-1 { height: 480px; order: 2; border: 2px solid var(--gold); }
-        .rank-2 { height: 380px; order: 1; }
-        .rank-3 { height: 380px; order: 3; }
-
-        .photo-box { width: 140px; height: 140px; margin: 15px auto; border: 2px dashed #444; border-radius: 20px; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-        .photo-box img { width: 100%; height: 100%; object-fit: cover; }
-
-        .members-section { width: 90%; max-width: 1100px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; margin-bottom: 50px; }
+        body { font-family: sans-serif; background: #121212; color: white; text-align: center; }
+        .tier-container { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; padding: 20px; }
+        .tier { border: 2px solid #444; padding: 15px; border-radius: 10px; width: 250px; }
+        .gold { border-color: gold; }
+        .silver { border-color: silver; }
+        .bronze { border-color: #cd7f32; }
+        .slot { background: #222; margin: 5px; padding: 8px; border-radius: 5px; display: flex; justify-content: space-between; }
+        input { background: #333; color: white; border: 1px solid #555; border-radius: 3px; padding: 2px 5px; width: 120px; }
         
-        .slot { 
-            height: 80px; display: flex; align-items: center; justify-content: center; 
-            font-weight: 900; cursor: pointer; background-size: contain; 
-            background-repeat: no-repeat; background-position: center; transition: 0.3s;
-        }
-
-        .gold-plate { background-image: linear-gradient(145deg, #bf953f, #fcf6ba, #b38728); color: #3d2b1f; border-radius: 10px; }
-        .silver-plate { background-image: linear-gradient(145deg, #999, #e0e0e0, #777); color: #222; border-radius: 10px; }
-        .bronze-plate { background-image: linear-gradient(145deg, #804a00, #cd7f32, #593300); color: #fff; border-radius: 10px; }
-
-        input[type="file"] { display: none; }
+        /* Admin buttons jo shuru me hidden rahenge */
+        .admin-btn { display: none; margin-top: 10px; padding: 10px 20px; cursor: pointer; border-radius: 5px; border: none; }
+        .save-btn { background: #28a745; color: white; }
+        .edit-mode .admin-btn { display: inline-block; }
+        .edit-mode input { border-color: #007bff; }
     </style>
 </head>
-<body>
+<body class="">
 
-    <div class="admin-bar" onclick="saveAllData()">SAVE & LOCK</div>
+    <h1>THE KINGDOM</h1>
+    <p id="status-msg">Press Alt + L to Edit (Admin Only)</p>
 
-    <header>
-        <h1 id="site-title" contenteditable="true">THE KINGDOM</h1>
-        <p style="color:var(--gold); letter-spacing:5px;">ROYAL EDITZ SYSTEM</p>
-    </header>
-
-    <div class="stage">
-        <div class="throne rank-2">
-            <span>🥈</span>
-            <div class="photo-box" id="box-r2" onclick="triggerFile(this)"><img src="" style="display:none;"><span>UP</span></div>
-            <div id="name-r2" contenteditable="true" style="font-family:'Cinzel';">EMPTY</div>
+    <div class="tier-container">
+        <div class="tier gold">
+            <h2>GOLD (10 Slots)</h2>
+            <div id="gold-slots"></div>
         </div>
-        <div class="throne rank-1">
-            <span>👑</span>
-            <div class="photo-box" id="box-r1" style="width:160px; height:160px;" onclick="triggerFile(this)"><img src="" style="display:none;"><span>KING LOGO</span></div>
-            <div id="name-r1" contenteditable="true" style="font-family:'Cinzel'; font-size:24px; color:var(--gold);">SUPREME KING</div>
+
+        <div class="tier silver">
+            <h2>SILVER (15 Slots)</h2>
+            <div id="silver-slots"></div>
         </div>
-        <div class="throne rank-3">
-            <span>🥉</span>
-            <div class="photo-box" id="box-r3" onclick="triggerFile(this)"><img src="" style="display:none;"><span>UP</span></div>
-            <div id="name-r3" contenteditable="true" style="font-family:'Cinzel';">EMPTY</div>
+
+        <div class="tier bronze">
+            <h2>BRONZE (20 Slots)</h2>
+            <div id="bronze-slots"></div>
         </div>
     </div>
 
-    <div class="members-section">
-        <h2 style="color:var(--gold)">GOLD (20 SLOTS)</h2>
-        <div class="grid" id="gold-grid"></div>
-        <h2 style="color:var(--silver)">SILVER (20 SLOTS)</h2>
-        <div class="grid" id="silver-grid"></div>
-        <h2 style="color:var(--bronze)">BRONZE (20 SLOTS)</h2>
-        <div class="grid" id="bronze-grid"></div>
-    </div>
-
-    <input type="file" id="master-upload" onchange="processFile(event)">
+    <button class="admin-btn save-btn" onclick="saveData()">SAVE ALL CHANGES</button>
 
     <script>
-        let activeEl = null;
+        const tiers = {
+            gold: { count: 10, id: "gold-slots" },
+            silver: { count: 15, id: "silver-slots" },
+            bronze: { count: 20, id: "bronze-slots" }
+        };
 
-        // --- 1. SLOTS CREATION ---
-        function createSlots(id, count, css) {
-            const container = document.getElementById(id);
-            for(let i=1; i<=count; i++) {
-                const div = document.createElement('div');
-                div.className = `slot ${css}`;
-                div.id = `${id}-slot-${i}`;
-                div.innerText = `PLATE ${i}`;
-                div.contentEditable = "true";
-                div.onclick = function() { triggerFile(this); };
-                container.appendChild(div);
+        // Slots generate karne ka function
+        function createSlots() {
+            const savedData = JSON.parse(localStorage.getItem('kingdomData')) || {};
+
+            for (let tier in tiers) {
+                const container = document.getElementById(tiers[tier].id);
+                for (let i = 1; i <= tiers[tier].count; i++) {
+                    const slotId = `${tier}-${i}`;
+                    const val = savedData[slotId] || "";
+                    container.innerHTML += `
+                        <div class="slot">
+                            <span>#${i}</span>
+                            <input type="text" id="${slotId}" value="${val}" placeholder="Empty">
+                        </div>
+                    `;
+                }
             }
         }
 
-        createSlots('gold-grid', 20, 'gold-plate');
-        createSlots('silver-grid', 20, 'silver-plate');
-        createSlots('bronze-grid', 20, 'bronze-plate');
-
-        // --- 2. FILE UPLOAD LOGIC ---
-        function triggerFile(el) {
-            activeEl = el;
-            document.getElementById('master-upload').click();
-        }
-
-        function processFile(e) {
-            const file = e.target.files[0];
-            if(!file) return;
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                const imgData = event.target.result;
-                if(activeEl.classList.contains('photo-box')) {
-                    const img = activeEl.querySelector('img');
-                    img.src = imgData;
-                    img.style.display = 'block';
-                    activeEl.querySelector('span').style.display = 'none';
-                } else {
-                    activeEl.style.backgroundImage = `url('${imgData}')`;
-                    activeEl.style.backgroundColor = "transparent";
-                    activeEl.innerText = ""; 
-                }
-            };
-            reader.readAsDataURL(file);
-        }
-
-        // --- 3. PERMANENT SAVE (LOCALSTORAGE) ---
-        function saveAllData() {
-            const data = {
-                texts: {},
-                images: {}
-            };
-
-            // Save all editable texts
-            document.querySelectorAll('[contenteditable="true"]').forEach(el => {
-                if(el.id) data.texts[el.id] = el.innerText;
+        // Save function (Abhi localStorage me save hoga, baad me Firebase se connect karenge)
+        function saveData() {
+            const data = {};
+            document.querySelectorAll('input').forEach(input => {
+                data[input.id] = input.value;
             });
-
-            // Save backgrounds & images
-            document.querySelectorAll('.slot').forEach(el => {
-                if(el.style.backgroundImage) data.images[el.id] = el.style.backgroundImage;
-            });
-
-            document.querySelectorAll('.photo-box img').forEach(img => {
-                if(img.src && img.style.display !== 'none') data.images[img.parentElement.id] = img.src;
-            });
-
             localStorage.setItem('kingdomData', JSON.stringify(data));
-            alert("Data Saved! Ab refresh karne par bhi nahi jayega.");
+            alert("Sab kuch save ho gaya hai!");
+            document.body.classList.remove('edit-mode');
+            document.getElementById('status-msg').innerText = "Changes Saved. Admin Mode Closed.";
         }
 
-        function loadData() {
-            const saved = localStorage.getItem('kingdomData');
-            if(!saved) return;
-            const data = JSON.parse(saved);
-
-            for(let id in data.texts) {
-                const el = document.getElementById(id);
-                if(el) el.innerText = data.texts[id];
+        // Secret Shortcut (Alt + L) to enable Edit Mode
+        window.addEventListener('keydown', function(e) {
+            if (e.altKey && e.key.toLowerCase() === 'l') {
+                document.body.classList.toggle('edit-mode');
+                const isEdit = document.body.classList.contains('edit-mode');
+                document.getElementById('status-msg').innerText = isEdit ? "ADMIN MODE: ON" : "Press Alt + L to Edit";
             }
+        });
 
-            for(let id in data.images) {
-                const el = document.getElementById(id);
-                if(!el) continue;
-                if(el.classList.contains('slot')) {
-                    el.style.backgroundImage = data.images[id];
-                    el.innerText = "";
-                } else if(el.classList.contains('photo-box')) {
-                    const img = el.querySelector('img');
-                    img.src = data.images[id];
-                    img.style.display = 'block';
-                    el.querySelector('span').style.display = 'none';
-                }
-            }
-        }
-
-        window.onload = loadData;
+        createSlots();
     </script>
 </body>
 </html>
